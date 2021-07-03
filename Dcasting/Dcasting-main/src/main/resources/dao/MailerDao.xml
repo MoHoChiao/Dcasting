@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zealot.dcasting.dao.MailerDao">
+  	<insert id="insertList">
+        INSERT INTO public.mailer (category, subject, content, contenttype, "from", "to", cc, bcc, attach, sendafter, sendat, sendcount, batchid, xdate, xuser) VALUES
+        <foreach collection="list" separator="," item="item" index="index">
+        	(#{item.category,jdbcType=VARCHAR},
+        	#{item.subject,jdbcType=VARCHAR},
+        	#{item.content,jdbcType=VARCHAR},
+      		#{item.contenttype,jdbcType=VARCHAR},
+      		#{item.from,jdbcType=VARCHAR},
+      		#{item.to,jdbcType=VARCHAR},
+      		#{item.cc,jdbcType=VARCHAR},
+      		#{item.bcc,jdbcType=VARCHAR},
+      		#{item.attach,jdbcType=VARCHAR},
+      		#{item.sendafter,jdbcType=TIMESTAMP},
+      		#{item.sendat,jdbcType=TIMESTAMP},
+      		#{item.sendcount,jdbcType=INTEGER},
+      		#{item.batchid,jdbcType=BIGINT},
+      		#{item.xdate,jdbcType=TIMESTAMP},
+      		#{item.xuser,jdbcType=VARCHAR})
+        </foreach>
+    </insert>
+</mapper>

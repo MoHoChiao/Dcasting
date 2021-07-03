@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zealot.dcasting.dao.UmsRoleDao">
+    <select id="getPermissionListByRoleId" resultMap="com.zealot.dcasting.mapper.UmsPermissionMapper.BaseResultMap">
+        SELECT
+            p.*
+        FROM
+            ums_role_permission_relation r
+            LEFT JOIN ums_permission p ON r.permission_id = p.id
+        WHERE
+            r.role_id = #{roleId};
+    </select>
+    <update id="deleteRoleByIds" parameterType="map">
+	    update public.ums_role set flag = 0, update_datetime = #{update_datetime,jdbcType=TIMESTAMP}, update_user_id = #{update_user_id,jdbcType=BIGINT} where id = #{id,jdbcType=BIGINT};
+  	</update>
+</mapper>

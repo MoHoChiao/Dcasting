@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zealot.dcasting.dao.OrdersDao">
+	<select id="getLastId" resultType="String">
+        select order_id from sale_orders where order_id like concat(#{preString}, '%') order by order_id desc limit 1
+    </select>
+  	<update id="deleteOrdersById" parameterType="map">
+	    update public.sale_orders set flag = 0, update_datetime = #{update_datetime,jdbcType=TIMESTAMP}, update_user_id = #{update_user_id,jdbcType=BIGINT} where order_id = #{id};
+  	</update>
+</mapper>

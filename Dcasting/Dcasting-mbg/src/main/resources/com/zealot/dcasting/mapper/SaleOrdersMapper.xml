@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zealot.dcasting.mapper.SaleOrdersMapper">
+  <resultMap id="BaseResultMap" type="com.zealot.dcasting.model.SaleOrders">
+    <id column="order_id" jdbcType="CHAR" property="orderId" />
+    <result column="sap_id" jdbcType="VARCHAR" property="sapId" />
+    <result column="delivery_id" jdbcType="VARCHAR" property="deliveryId" />
+    <result column="inquiry_id" jdbcType="CHAR" property="inquiryId" />
+    <result column="inquiry_name" jdbcType="VARCHAR" property="inquiryName" />
+    <result column="quotation_id" jdbcType="CHAR" property="quotationId" />
+    <result column="amount" jdbcType="BIGINT" property="amount" />
+    <result column="received_deposit" jdbcType="INTEGER" property="receivedDeposit" />
+    <result column="estimated_delivery_date" jdbcType="TIMESTAMP" property="estimatedDeliveryDate" />
+    <result column="actual_delivery_date" jdbcType="TIMESTAMP" property="actualDeliveryDate" />
+    <result column="estimated_arrival_date" jdbcType="TIMESTAMP" property="estimatedArrivalDate" />
+    <result column="actual_arrival_date" jdbcType="TIMESTAMP" property="actualArrivalDate" />
+    <result column="order_status" jdbcType="CHAR" property="orderStatus" />
+    <result column="inquiry_user_id" jdbcType="BIGINT" property="inquiryUserId" />
+    <result column="inquiry_group_id" jdbcType="BIGINT" property="inquiryGroupId" />
+    <result column="supplier_id" jdbcType="BIGINT" property="supplierId" />
+    <result column="supplier_group_id" jdbcType="BIGINT" property="supplierGroupId" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="create_user_id" jdbcType="BIGINT" property="createUserId" />
+    <result column="create_datetime" jdbcType="TIMESTAMP" property="createDatetime" />
+    <result column="update_user_id" jdbcType="BIGINT" property="updateUserId" />
+    <result column="update_datetime" jdbcType="TIMESTAMP" property="updateDatetime" />
+    <result column="flag" jdbcType="INTEGER" property="flag" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    order_id, sap_id, delivery_id, inquiry_id, inquiry_name, quotation_id, amount, received_deposit, 
+    estimated_delivery_date, actual_delivery_date, estimated_arrival_date, actual_arrival_date, 
+    order_status, inquiry_user_id, inquiry_group_id, supplier_id, supplier_group_id, 
+    remark, create_user_id, create_datetime, update_user_id, update_datetime, flag
+  </sql>
+  <select id="selectByExample" parameterType="com.zealot.dcasting.model.SaleOrdersExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from public.sale_orders
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from public.sale_orders
+    where order_id = #{orderId,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from public.sale_orders
+    where order_id = #{orderId,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zealot.dcasting.model.SaleOrdersExample">
+    delete from public.sale_orders
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zealot.dcasting.model.SaleOrders">
+    insert into public.sale_orders (order_id, sap_id, delivery_id, 
+      inquiry_id, inquiry_name, quotation_id, 
+      amount, received_deposit, estimated_delivery_date, 
+      actual_delivery_date, estimated_arrival_date, 
+      actual_arrival_date, order_status, inquiry_user_id, 
+      inquiry_group_id, supplier_id, supplier_group_id, 
+      remark, create_user_id, create_datetime, 
+      update_user_id, update_datetime, flag
+      )
+    values (#{orderId,jdbcType=CHAR}, #{sapId,jdbcType=VARCHAR}, #{deliveryId,jdbcType=VARCHAR}, 
+      #{inquiryId,jdbcType=CHAR}, #{inquiryName,jdbcType=VARCHAR}, #{quotationId,jdbcType=CHAR}, 
+      #{amount,jdbcType=BIGINT}, #{receivedDeposit,jdbcType=INTEGER}, #{estimatedDeliveryDate,jdbcType=TIMESTAMP}, 
+      #{actualDeliveryDate,jdbcType=TIMESTAMP}, #{estimatedArrivalDate,jdbcType=TIMESTAMP}, 
+      #{actualArrivalDate,jdbcType=TIMESTAMP}, #{orderStatus,jdbcType=CHAR}, #{inquiryUserId,jdbcType=BIGINT}, 
+      #{inquiryGroupId,jdbcType=BIGINT}, #{supplierId,jdbcType=BIGINT}, #{supplierGroupId,jdbcType=BIGINT}, 
+      #{remark,jdbcType=VARCHAR}, #{createUserId,jdbcType=BIGINT}, #{createDatetime,jdbcType=TIMESTAMP}, 
+      #{updateUserId,jdbcType=BIGINT}, #{updateDatetime,jdbcType=TIMESTAMP}, #{flag,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zealot.dcasting.model.SaleOrders">
+    insert into public.sale_orders
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="sapId != null">
+        sap_id,
+      </if>
+      <if test="deliveryId != null">
+        delivery_id,
+      </if>
+      <if test="inquiryId != null">
+        inquiry_id,
+      </if>
+      <if test="inquiryName != null">
+        inquiry_name,
+      </if>
+      <if test="quotationId != null">
+        quotation_id,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="receivedDeposit != null">
+        received_deposit,
+      </if>
+      <if test="estimatedDeliveryDate != null">
+        estimated_delivery_date,
+      </if>
+      <if test="actualDeliveryDate != null">
+        actual_delivery_date,
+      </if>
+      <if test="estimatedArrivalDate != null">
+        estimated_arrival_date,
+      </if>
+      <if test="actualArrivalDate != null">
+        actual_arrival_date,
+      </if>
+      <if test="orderStatus != null">
+        order_status,
+      </if>
+      <if test="inquiryUserId != null">
+        inquiry_user_id,
+      </if>
+      <if test="inquiryGroupId != null">
+        inquiry_group_id,
+      </if>
+      <if test="supplierId != null">
+        supplier_id,
+      </if>
+      <if test="supplierGroupId != null">
+        supplier_group_id,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="createUserId != null">
+        create_user_id,
+      </if>
+      <if test="createDatetime != null">
+        create_datetime,
+      </if>
+      <if test="updateUserId != null">
+        update_user_id,
+      </if>
+      <if test="updateDatetime != null">
+        update_datetime,
+      </if>
+      <if test="flag != null">
+        flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        #{orderId,jdbcType=CHAR},
+      </if>
+      <if test="sapId != null">
+        #{sapId,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryId != null">
+        #{deliveryId,jdbcType=VARCHAR},
+      </if>
+      <if test="inquiryId != null">
+        #{inquiryId,jdbcType=CHAR},
+      </if>
+      <if test="inquiryName != null">
+        #{inquiryName,jdbcType=VARCHAR},
+      </if>
+      <if test="quotationId != null">
+        #{quotationId,jdbcType=CHAR},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="receivedDeposit != null">
+        #{receivedDeposit,jdbcType=INTEGER},
+      </if>
+      <if test="estimatedDeliveryDate != null">
+        #{estimatedDeliveryDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actualDeliveryDate != null">
+        #{actualDeliveryDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="estimatedArrivalDate != null">
+        #{estimatedArrivalDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actualArrivalDate != null">
+        #{actualArrivalDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderStatus != null">
+        #{orderStatus,jdbcType=CHAR},
+      </if>
+      <if test="inquiryUserId != null">
+        #{inquiryUserId,jdbcType=BIGINT},
+      </if>
+      <if test="inquiryGroupId != null">
+        #{inquiryGroupId,jdbcType=BIGINT},
+      </if>
+      <if test="supplierId != null">
+        #{supplierId,jdbcType=BIGINT},
+      </if>
+      <if test="supplierGroupId != null">
+        #{supplierGroupId,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null">
+        #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createDatetime != null">
+        #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserId != null">
+        #{updateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="updateDatetime != null">
+        #{updateDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="flag != null">
+        #{flag,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zealot.dcasting.model.SaleOrdersExample" resultType="java.lang.Long">
+    select count(*) from public.sale_orders
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update public.sale_orders
+    <set>
+      <if test="record.orderId != null">
+        order_id = #{record.orderId,jdbcType=CHAR},
+      </if>
+      <if test="record.sapId != null">
+        sap_id = #{record.sapId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deliveryId != null">
+        delivery_id = #{record.deliveryId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inquiryId != null">
+        inquiry_id = #{record.inquiryId,jdbcType=CHAR},
+      </if>
+      <if test="record.inquiryName != null">
+        inquiry_name = #{record.inquiryName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.quotationId != null">
+        quotation_id = #{record.quotationId,jdbcType=CHAR},
+      </if>
+      <if test="record.amount != null">
+        amount = #{record.amount,jdbcType=BIGINT},
+      </if>
+      <if test="record.receivedDeposit != null">
+        received_deposit = #{record.receivedDeposit,jdbcType=INTEGER},
+      </if>
+      <if test="record.estimatedDeliveryDate != null">
+        estimated_delivery_date = #{record.estimatedDeliveryDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.actualDeliveryDate != null">
+        actual_delivery_date = #{record.actualDeliveryDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.estimatedArrivalDate != null">
+        estimated_arrival_date = #{record.estimatedArrivalDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.actualArrivalDate != null">
+        actual_arrival_date = #{record.actualArrivalDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.orderStatus != null">
+        order_status = #{record.orderStatus,jdbcType=CHAR},
+      </if>
+      <if test="record.inquiryUserId != null">
+        inquiry_user_id = #{record.inquiryUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.inquiryGroupId != null">
+        inquiry_group_id = #{record.inquiryGroupId,jdbcType=BIGINT},
+      </if>
+      <if test="record.supplierId != null">
+        supplier_id = #{record.supplierId,jdbcType=BIGINT},
+      </if>
+      <if test="record.supplierGroupId != null">
+        supplier_group_id = #{record.supplierGroupId,jdbcType=BIGINT},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserId != null">
+        create_user_id = #{record.createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDatetime != null">
+        create_datetime = #{record.createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateUserId != null">
+        update_user_id = #{record.updateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDatetime != null">
+        update_datetime = #{record.updateDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.flag != null">
+        flag = #{record.flag,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update public.sale_orders
+    set order_id = #{record.orderId,jdbcType=CHAR},
+      sap_id = #{record.sapId,jdbcType=VARCHAR},
+      delivery_id = #{record.deliveryId,jdbcType=VARCHAR},
+      inquiry_id = #{record.inquiryId,jdbcType=CHAR},
+      inquiry_name = #{record.inquiryName,jdbcType=VARCHAR},
+      quotation_id = #{record.quotationId,jdbcType=CHAR},
+      amount = #{record.amount,jdbcType=BIGINT},
+      received_deposit = #{record.receivedDeposit,jdbcType=INTEGER},
+      estimated_delivery_date = #{record.estimatedDeliveryDate,jdbcType=TIMESTAMP},
+      actual_delivery_date = #{record.actualDeliveryDate,jdbcType=TIMESTAMP},
+      estimated_arrival_date = #{record.estimatedArrivalDate,jdbcType=TIMESTAMP},
+      actual_arrival_date = #{record.actualArrivalDate,jdbcType=TIMESTAMP},
+      order_status = #{record.orderStatus,jdbcType=CHAR},
+      inquiry_user_id = #{record.inquiryUserId,jdbcType=BIGINT},
+      inquiry_group_id = #{record.inquiryGroupId,jdbcType=BIGINT},
+      supplier_id = #{record.supplierId,jdbcType=BIGINT},
+      supplier_group_id = #{record.supplierGroupId,jdbcType=BIGINT},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      create_user_id = #{record.createUserId,jdbcType=BIGINT},
+      create_datetime = #{record.createDatetime,jdbcType=TIMESTAMP},
+      update_user_id = #{record.updateUserId,jdbcType=BIGINT},
+      update_datetime = #{record.updateDatetime,jdbcType=TIMESTAMP},
+      flag = #{record.flag,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zealot.dcasting.model.SaleOrders">
+    update public.sale_orders
+    <set>
+      <if test="sapId != null">
+        sap_id = #{sapId,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryId != null">
+        delivery_id = #{deliveryId,jdbcType=VARCHAR},
+      </if>
+      <if test="inquiryId != null">
+        inquiry_id = #{inquiryId,jdbcType=CHAR},
+      </if>
+      <if test="inquiryName != null">
+        inquiry_name = #{inquiryName,jdbcType=VARCHAR},
+      </if>
+      <if test="quotationId != null">
+        quotation_id = #{quotationId,jdbcType=CHAR},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="receivedDeposit != null">
+        received_deposit = #{receivedDeposit,jdbcType=INTEGER},
+      </if>
+      <if test="estimatedDeliveryDate != null">
+        estimated_delivery_date = #{estimatedDeliveryDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actualDeliveryDate != null">
+        actual_delivery_date = #{actualDeliveryDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="estimatedArrivalDate != null">
+        estimated_arrival_date = #{estimatedArrivalDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actualArrivalDate != null">
+        actual_arrival_date = #{actualArrivalDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderStatus != null">
+        order_status = #{orderStatus,jdbcType=CHAR},
+      </if>
+      <if test="inquiryUserId != null">
+        inquiry_user_id = #{inquiryUserId,jdbcType=BIGINT},
+      </if>
+      <if test="inquiryGroupId != null">
+        inquiry_group_id = #{inquiryGroupId,jdbcType=BIGINT},
+      </if>
+      <if test="supplierId != null">
+        supplier_id = #{supplierId,jdbcType=BIGINT},
+      </if>
+      <if test="supplierGroupId != null">
+        supplier_group_id = #{supplierGroupId,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null">
+        create_user_id = #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createDatetime != null">
+        create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserId != null">
+        update_user_id = #{updateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="updateDatetime != null">
+        update_datetime = #{updateDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="flag != null">
+        flag = #{flag,jdbcType=INTEGER},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zealot.dcasting.model.SaleOrders">
+    update public.sale_orders
+    set sap_id = #{sapId,jdbcType=VARCHAR},
+      delivery_id = #{deliveryId,jdbcType=VARCHAR},
+      inquiry_id = #{inquiryId,jdbcType=CHAR},
+      inquiry_name = #{inquiryName,jdbcType=VARCHAR},
+      quotation_id = #{quotationId,jdbcType=CHAR},
+      amount = #{amount,jdbcType=BIGINT},
+      received_deposit = #{receivedDeposit,jdbcType=INTEGER},
+      estimated_delivery_date = #{estimatedDeliveryDate,jdbcType=TIMESTAMP},
+      actual_delivery_date = #{actualDeliveryDate,jdbcType=TIMESTAMP},
+      estimated_arrival_date = #{estimatedArrivalDate,jdbcType=TIMESTAMP},
+      actual_arrival_date = #{actualArrivalDate,jdbcType=TIMESTAMP},
+      order_status = #{orderStatus,jdbcType=CHAR},
+      inquiry_user_id = #{inquiryUserId,jdbcType=BIGINT},
+      inquiry_group_id = #{inquiryGroupId,jdbcType=BIGINT},
+      supplier_id = #{supplierId,jdbcType=BIGINT},
+      supplier_group_id = #{supplierGroupId,jdbcType=BIGINT},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_user_id = #{createUserId,jdbcType=BIGINT},
+      create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      update_user_id = #{updateUserId,jdbcType=BIGINT},
+      update_datetime = #{updateDatetime,jdbcType=TIMESTAMP},
+      flag = #{flag,jdbcType=INTEGER}
+    where order_id = #{orderId,jdbcType=CHAR}
+  </update>
+</mapper>

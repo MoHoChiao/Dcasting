@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zealot.dcasting.dao.UmsUserPermissionRelationDao">
+    <!--批量新增回寫主鍵支持-->
+    <insert id="insertList">
+        INSERT INTO ums_user_permission_relation (user_id, permission_id, type) VALUES
+        <foreach collection="list" separator="," item="item" index="index">
+            (#{item.userId,jdbcType=BIGINT},
+            #{item.permissionId,jdbcType=BIGINT},
+            #{item.type,jdbcType=INTEGER})
+        </foreach>
+    </insert>
+    <select id="getUserIdList" resultType="java.lang.Long">
+        SELECT
+            DISTINCT ur.user_id
+        FROM
+            ums_user_permission_relation up
+        WHERE up.permission_id=#{permissionId}
+    </select>
+</mapper>

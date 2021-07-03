@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zealot.dcasting.dao.QuotationDetailsDao">
+  	<update id="deleteDetailsById" parameterType="map">
+	    update public.quotation_details set flag = 0, update_datetime = #{update_datetime,jdbcType=TIMESTAMP}, update_user_id = #{update_user_id,jdbcType=BIGINT} where id = #{id};
+  	</update>
+  	<update id="deleteDetailsByQuotationId" parameterType="map">
+	    update public.quotation_details set flag = 0, update_datetime = #{update_datetime,jdbcType=TIMESTAMP}, update_user_id = #{update_user_id,jdbcType=BIGINT} where quotation_id = #{quotationId};
+  	</update>
+  	<select id="sumByQuotationId" resultType="java.lang.Long">
+	    select sum(item_subtotal) from public.quotation_details where flag <![CDATA[ <> ]]> 0 and quotation_id = #{quotationId};
+	</select>
+</mapper>

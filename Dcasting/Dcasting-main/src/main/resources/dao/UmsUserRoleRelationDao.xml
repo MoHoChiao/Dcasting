@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zealot.dcasting.dao.UmsUserRoleRelationDao">
+    <!--批量新增回寫主鍵支持-->
+    <insert id="insertList">
+        INSERT INTO ums_user_role_relation (user_id, role_id) VALUES
+        <foreach collection="list" separator="," item="item" index="index">
+            (#{item.userId,jdbcType=BIGINT},
+            #{item.roleId,jdbcType=BIGINT})
+        </foreach>
+    </insert>
+    <select id="getRoleList" resultMap="com.zealot.dcasting.mapper.UmsRoleMapper.BaseResultMap">
+        select r.*
+        from ums_user_role_relation ur left join ums_role r on ur.role_id = r.id
+        where ur.user_id = #{userId} and r.flag <![CDATA[ <> ]]> 0
+    </select>
+    <select id="getRolePermissionList" resultMap="com.zealot.dcasting.mapper.UmsPermissionMapper.BaseResultMap">
+        select p.*
+        from ums_user_role_relation ur left join ums_role r on ur.role_id = r.id
+            left join ums_role_permission_relation rp on r.id = rp.role_id
+            left join ums_permission p on rp.permission_id=p.id
+            where ur.user_id = #{userId} and r.flag <![CDATA[ <> ]]> 0 and p.id is not null
+    </select>
+    <select id="getPermissionList" resultMap="com.zealot.dcasting.mapper.UmsPermissionMapper.BaseResultMap">
+        SELECT
+            p.*
+        FROM
+            ums_user_role_relation ur
+            LEFT JOIN ums_role r ON ur.role_id = r.id
+            LEFT JOIN ums_role_permission_relation rp ON r.id = rp.role_id
+            LEFT JOIN ums_permission p ON rp.permission_id = p.id
+        WHERE
+            ur.user_id = #{userId}
+            AND r.flag <![CDATA[ <> ]]> 0
+            AND r.status = 1
+            AND p.id IS NOT NULL
+            AND p.id NOT IN (
+                SELECT
+                    p.id
+                FROM
+                    ums_user_permission_relation pr
+                    LEFT JOIN ums_permission p ON pr.permission_id = p.id
+                WHERE
+                    pr.type = - 1
+                    AND pr.user_id = #{userId}
+            )
+        UNION
+        SELECT
+            p.*
+        FROM
+            ums_user_permission_relation pr
+            LEFT JOIN ums_permission p ON pr.permission_id = p.id
+        WHERE
+            pr.type = 1
+            AND pr.user_id = #{userId}
+    </select>
+    <select id="getUserIdList" resultType="java.lang.Long">
+        SELECT
+            DISTINCT ur.user_id
+        FROM
+            ums_role_permission_relation pr
+                LEFT JOIN ums_user_role_relation ur ON pr.role_id = ur.role_id
+        WHERE pr.permission_id=#{permissionId}
+    </select>
+</mapper>

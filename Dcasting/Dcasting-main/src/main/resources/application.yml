@@ -1,0 +1,84 @@
+spring:
+  datasource: #Postgres資料庫連線資料設定
+    url: jdbc:postgresql://localhost:5432/d-casting?useUnicode=yes&characterEncoding=UTF-8
+    username: postgres
+    password: root
+    druid:
+      initial-size: 5 #连接池初始化大小
+      min-idle: 10 #最小空闲连接数
+      max-active: 20 #最大连接数
+      web-stat-filter:
+        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*" #不统计这些请求数据
+      stat-view-servlet: #訪問監控網頁的登錄用戶名和密碼
+        login-username: druid
+        login-password: druid
+  redis: #Redis資料庫連線資料設定
+    host: localhost # Redis服务器地址
+    database: 0 # Redis數據庫索引（默認為0）
+    port: 6379 # Redis服務器連接端口
+    password: # Redis服務器連接密碼（默認為空）
+    timeout: 300ms # 连接超时时间（毫秒）
+  servlet:
+    multipart:
+      enabled: true #開啟文件上傳
+      max-file-size: 250MB #限製文件上傳大小為250M
+      max-request-size: 250MB
+
+fileUploadRootPath: D:\new\ # 檔案上傳的根目錄之路徑
+systemMailSender: hungweiliu543@gmail.com # 系統發信信箱
+systemMailRecipient: hungweiliu543@gmail.com # 系統收信信箱
+dataRange: 6 # 單位為月, 最小6個月(低於此值以六個月計), 最大值12個月(高於此值以12個計)
+
+logging:
+  level:
+    root: INFO #日誌配置DEBUG,INFO,WARN,ERROR
+    com.zealot.dcasting: DEBUG
+  file:
+    path: log #配置日誌生成路徑
+
+server:
+  port: 8080
+  max-http-header-size: 8096
+  tomcat:
+    uri-encoding: UTF-8
+
+mybatis:
+  mapper-locations:
+    - classpath:dao/*.xml
+    - classpath*:com/**/mapper/*.xml
+
+jwt:
+  tokenHeader: Authorization #JWT存儲的請求頭
+  secret: D-Casting #JWT加解密使用的密鑰
+  expiration: 604800 #JWT的登入超期限時間(60*60*24*7)
+  tokenHead: 'Bearer ' #JWT負載中拿到開頭
+
+redis:
+  database: D-Casting
+  key:
+    user: 'ums:user'
+    permissionList: 'ums:permissionList'
+  expire:
+    common: 86400 # 秒為單位, 例如86400秒為24小時
+
+secure:
+  ignored:
+    urls:
+      - /swagger-ui.html
+      - /swagger-resources/**
+      - /swagger/**
+      - /webjars/springfox-swagger-ui/**
+      - /**/v2/api-docs
+      - /static/**
+      - /
+      - /index.html
+      - /favicon.ico
+      - /user/login
+      - /user/applyResetPassword
+      - /user/register
+      - /user/info
+      - /user/logout
+      - /user/updatePassword
+      - /actuator/**
+      - /druid/**
+      - /minio/upload

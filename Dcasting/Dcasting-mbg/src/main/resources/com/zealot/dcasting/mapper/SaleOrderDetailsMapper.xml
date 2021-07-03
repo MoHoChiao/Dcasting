@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zealot.dcasting.mapper.SaleOrderDetailsMapper">
+  <resultMap id="BaseResultMap" type="com.zealot.dcasting.model.SaleOrderDetails">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="order_id" jdbcType="CHAR" property="orderId" />
+    <result column="item_number" jdbcType="VARCHAR" property="itemNumber" />
+    <result column="item_category" jdbcType="VARCHAR" property="itemCategory" />
+    <result column="item_caption" jdbcType="VARCHAR" property="itemCaption" />
+    <result column="unit_price" jdbcType="INTEGER" property="unitPrice" />
+    <result column="item_quantity" jdbcType="INTEGER" property="itemQuantity" />
+    <result column="item_subtotal" jdbcType="INTEGER" property="itemSubtotal" />
+    <result column="item_supplier_id" jdbcType="BIGINT" property="itemSupplierId" />
+    <result column="item_supplier_group_id" jdbcType="BIGINT" property="itemSupplierGroupId" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="create_user_id" jdbcType="BIGINT" property="createUserId" />
+    <result column="create_datetime" jdbcType="TIMESTAMP" property="createDatetime" />
+    <result column="update_user_id" jdbcType="BIGINT" property="updateUserId" />
+    <result column="update_datetime" jdbcType="TIMESTAMP" property="updateDatetime" />
+    <result column="flag" jdbcType="INTEGER" property="flag" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, order_id, item_number, item_category, item_caption, unit_price, item_quantity, 
+    item_subtotal, item_supplier_id, item_supplier_group_id, remark, create_user_id, 
+    create_datetime, update_user_id, update_datetime, flag
+  </sql>
+  <select id="selectByExample" parameterType="com.zealot.dcasting.model.SaleOrderDetailsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from public.sale_order_details
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from public.sale_order_details
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from public.sale_order_details
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zealot.dcasting.model.SaleOrderDetailsExample">
+    delete from public.sale_order_details
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.zealot.dcasting.model.SaleOrderDetails" useGeneratedKeys="true">
+    insert into public.sale_order_details (order_id, item_number, item_category, 
+      item_caption, unit_price, item_quantity, 
+      item_subtotal, item_supplier_id, item_supplier_group_id, 
+      remark, create_user_id, create_datetime, 
+      update_user_id, update_datetime, flag
+      )
+    values (#{orderId,jdbcType=CHAR}, #{itemNumber,jdbcType=VARCHAR}, #{itemCategory,jdbcType=VARCHAR}, 
+      #{itemCaption,jdbcType=VARCHAR}, #{unitPrice,jdbcType=INTEGER}, #{itemQuantity,jdbcType=INTEGER}, 
+      #{itemSubtotal,jdbcType=INTEGER}, #{itemSupplierId,jdbcType=BIGINT}, #{itemSupplierGroupId,jdbcType=BIGINT}, 
+      #{remark,jdbcType=VARCHAR}, #{createUserId,jdbcType=BIGINT}, #{createDatetime,jdbcType=TIMESTAMP}, 
+      #{updateUserId,jdbcType=BIGINT}, #{updateDatetime,jdbcType=TIMESTAMP}, #{flag,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.zealot.dcasting.model.SaleOrderDetails" useGeneratedKeys="true">
+    insert into public.sale_order_details
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="itemNumber != null">
+        item_number,
+      </if>
+      <if test="itemCategory != null">
+        item_category,
+      </if>
+      <if test="itemCaption != null">
+        item_caption,
+      </if>
+      <if test="unitPrice != null">
+        unit_price,
+      </if>
+      <if test="itemQuantity != null">
+        item_quantity,
+      </if>
+      <if test="itemSubtotal != null">
+        item_subtotal,
+      </if>
+      <if test="itemSupplierId != null">
+        item_supplier_id,
+      </if>
+      <if test="itemSupplierGroupId != null">
+        item_supplier_group_id,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="createUserId != null">
+        create_user_id,
+      </if>
+      <if test="createDatetime != null">
+        create_datetime,
+      </if>
+      <if test="updateUserId != null">
+        update_user_id,
+      </if>
+      <if test="updateDatetime != null">
+        update_datetime,
+      </if>
+      <if test="flag != null">
+        flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        #{orderId,jdbcType=CHAR},
+      </if>
+      <if test="itemNumber != null">
+        #{itemNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="itemCategory != null">
+        #{itemCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="itemCaption != null">
+        #{itemCaption,jdbcType=VARCHAR},
+      </if>
+      <if test="unitPrice != null">
+        #{unitPrice,jdbcType=INTEGER},
+      </if>
+      <if test="itemQuantity != null">
+        #{itemQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="itemSubtotal != null">
+        #{itemSubtotal,jdbcType=INTEGER},
+      </if>
+      <if test="itemSupplierId != null">
+        #{itemSupplierId,jdbcType=BIGINT},
+      </if>
+      <if test="itemSupplierGroupId != null">
+        #{itemSupplierGroupId,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null">
+        #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createDatetime != null">
+        #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserId != null">
+        #{updateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="updateDatetime != null">
+        #{updateDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="flag != null">
+        #{flag,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zealot.dcasting.model.SaleOrderDetailsExample" resultType="java.lang.Long">
+    select count(*) from public.sale_order_details
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update public.sale_order_details
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderId != null">
+        order_id = #{record.orderId,jdbcType=CHAR},
+      </if>
+      <if test="record.itemNumber != null">
+        item_number = #{record.itemNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemCategory != null">
+        item_category = #{record.itemCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="record.itemCaption != null">
+        item_caption = #{record.itemCaption,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unitPrice != null">
+        unit_price = #{record.unitPrice,jdbcType=INTEGER},
+      </if>
+      <if test="record.itemQuantity != null">
+        item_quantity = #{record.itemQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="record.itemSubtotal != null">
+        item_subtotal = #{record.itemSubtotal,jdbcType=INTEGER},
+      </if>
+      <if test="record.itemSupplierId != null">
+        item_supplier_id = #{record.itemSupplierId,jdbcType=BIGINT},
+      </if>
+      <if test="record.itemSupplierGroupId != null">
+        item_supplier_group_id = #{record.itemSupplierGroupId,jdbcType=BIGINT},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserId != null">
+        create_user_id = #{record.createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDatetime != null">
+        create_datetime = #{record.createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateUserId != null">
+        update_user_id = #{record.updateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDatetime != null">
+        update_datetime = #{record.updateDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.flag != null">
+        flag = #{record.flag,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update public.sale_order_details
+    set id = #{record.id,jdbcType=BIGINT},
+      order_id = #{record.orderId,jdbcType=CHAR},
+      item_number = #{record.itemNumber,jdbcType=VARCHAR},
+      item_category = #{record.itemCategory,jdbcType=VARCHAR},
+      item_caption = #{record.itemCaption,jdbcType=VARCHAR},
+      unit_price = #{record.unitPrice,jdbcType=INTEGER},
+      item_quantity = #{record.itemQuantity,jdbcType=INTEGER},
+      item_subtotal = #{record.itemSubtotal,jdbcType=INTEGER},
+      item_supplier_id = #{record.itemSupplierId,jdbcType=BIGINT},
+      item_supplier_group_id = #{record.itemSupplierGroupId,jdbcType=BIGINT},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      create_user_id = #{record.createUserId,jdbcType=BIGINT},
+      create_datetime = #{record.createDatetime,jdbcType=TIMESTAMP},
+      update_user_id = #{record.updateUserId,jdbcType=BIGINT},
+      update_datetime = #{record.updateDatetime,jdbcType=TIMESTAMP},
+      flag = #{record.flag,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zealot.dcasting.model.SaleOrderDetails">
+    update public.sale_order_details
+    <set>
+      <if test="orderId != null">
+        order_id = #{orderId,jdbcType=CHAR},
+      </if>
+      <if test="itemNumber != null">
+        item_number = #{itemNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="itemCategory != null">
+        item_category = #{itemCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="itemCaption != null">
+        item_caption = #{itemCaption,jdbcType=VARCHAR},
+      </if>
+      <if test="unitPrice != null">
+        unit_price = #{unitPrice,jdbcType=INTEGER},
+      </if>
+      <if test="itemQuantity != null">
+        item_quantity = #{itemQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="itemSubtotal != null">
+        item_subtotal = #{itemSubtotal,jdbcType=INTEGER},
+      </if>
+      <if test="itemSupplierId != null">
+        item_supplier_id = #{itemSupplierId,jdbcType=BIGINT},
+      </if>
+      <if test="itemSupplierGroupId != null">
+        item_supplier_group_id = #{itemSupplierGroupId,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null">
+        create_user_id = #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createDatetime != null">
+        create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserId != null">
+        update_user_id = #{updateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="updateDatetime != null">
+        update_datetime = #{updateDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="flag != null">
+        flag = #{flag,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zealot.dcasting.model.SaleOrderDetails">
+    update public.sale_order_details
+    set order_id = #{orderId,jdbcType=CHAR},
+      item_number = #{itemNumber,jdbcType=VARCHAR},
+      item_category = #{itemCategory,jdbcType=VARCHAR},
+      item_caption = #{itemCaption,jdbcType=VARCHAR},
+      unit_price = #{unitPrice,jdbcType=INTEGER},
+      item_quantity = #{itemQuantity,jdbcType=INTEGER},
+      item_subtotal = #{itemSubtotal,jdbcType=INTEGER},
+      item_supplier_id = #{itemSupplierId,jdbcType=BIGINT},
+      item_supplier_group_id = #{itemSupplierGroupId,jdbcType=BIGINT},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_user_id = #{createUserId,jdbcType=BIGINT},
+      create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      update_user_id = #{updateUserId,jdbcType=BIGINT},
+      update_datetime = #{updateDatetime,jdbcType=TIMESTAMP},
+      flag = #{flag,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

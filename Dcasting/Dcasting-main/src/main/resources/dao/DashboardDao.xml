@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zealot.dcasting.dao.DashboardDao">
+	<select id="getInquiriesStatusCountByCenter" resultType="java.util.HashMap">
+        select inquiry_status, count(*) from public.inquiries where create_datetime between #{startDate} and #{endDate} and flag <![CDATA[ <> ]]> 0 and inquiry_status <![CDATA[ <> ]]> 'D' group by inquiry_status
+    </select>
+    <select id="getInquiriesStatusCountByNotCenter" resultType="java.util.HashMap">
+        select inquiry_status, count(*) from public.inquiries where create_datetime between #{startDate} and #{endDate} and flag <![CDATA[ <> ]]> 0 and inquiry_group_id = #{groupid} group by inquiry_status
+    </select>
+    <select id="getInquiriesStatusCountByNotCenterAndGroupNull" resultType="java.util.HashMap">
+        select inquiry_status, count(*) from public.inquiries where create_datetime between #{startDate} and #{endDate} and flag <![CDATA[ <> ]]> 0 and inquiry_group_id = null and inquiry_user_id = #{userid} group by inquiry_status
+    </select>
+    
+    <select id="getQuotationsStatusCountByCenter" resultType="java.util.HashMap">
+        select quotation_status, count(*) from public.quotations where create_datetime between #{startDate} and #{endDate} and flag <![CDATA[ <> ]]> 0 group by quotation_status
+    </select>
+    <select id="getQuotationsStatusCountByNotCenter" resultType="java.util.HashMap">
+        select quotation_status, count(*) from public.quotations where create_datetime between #{startDate} and #{endDate} and flag <![CDATA[ <> ]]> 0 and quotation_status <![CDATA[ <> ]]> 'D' and inquiry_group_id = #{groupid} group by quotation_status
+    </select>
+    <select id="getQuotationsStatusCountByNotCenterAndGroupNull" resultType="java.util.HashMap">
+        select quotation_status, count(*) from public.quotations where create_datetime between #{startDate} and #{endDate} and flag <![CDATA[ <> ]]> 0 and quotation_status <![CDATA[ <> ]]> 'D' and inquiry_group_id = null and inquiry_user_id = #{userid} group by quotation_status
+    </select>
+    
+    <select id="getOrdersStatusCountByCenter" resultType="java.util.HashMap">
+        select order_status, count(*) from public.sale_orders where create_datetime between #{startDate} and #{endDate} and flag <![CDATA[ <> ]]> 0 group by order_status
+    </select>
+    <select id="getOrdersStatusCountByNotCenter" resultType="java.util.HashMap">
+        select order_status, count(*) from public.sale_orders where create_datetime between #{startDate} and #{endDate} and flag <![CDATA[ <> ]]> 0 and inquiry_group_id = #{groupid} group by order_status
+    </select>
+    <select id="getOrdersStatusCountByNotCenterAndGroupNull" resultType="java.util.HashMap">
+        select order_status, count(*) from public.sale_orders where create_datetime between #{startDate} and #{endDate} and flag <![CDATA[ <> ]]> 0 and inquiry_group_id = null and inquiry_user_id = #{userid} group by order_status
+    </select>
+    
+    <select id="getProjectProgressCountByCenter" resultType="java.util.HashMap">
+        select project_progress, count(*) from public.projects where create_datetime between #{startDate} and #{endDate} and flag <![CDATA[ <> ]]> 0 group by project_progress
+    </select>
+    <select id="getProjectProgressCountByNotCenter" resultType="java.util.HashMap">
+        select project_progress, count(*) from public.projects where create_datetime between #{startDate} and #{endDate} and flag <![CDATA[ <> ]]> 0 and supplier_group_id = #{groupid} group by project_progress
+    </select>
+    <select id="getProjectProgressCountByNotCenterAndGroupNull" resultType="java.util.HashMap">
+        select project_progress, count(*) from public.projects where create_datetime between #{startDate} and #{endDate} and flag <![CDATA[ <> ]]> 0 and supplier_group_id = null and supplier_id = #{userid} group by project_progress
+    </select>
+</mapper>

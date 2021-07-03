@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zealot.dcasting.mapper.QuotationsMapper">
+  <resultMap id="BaseResultMap" type="com.zealot.dcasting.model.Quotations">
+    <id column="quotation_id" jdbcType="CHAR" property="quotationId" />
+    <result column="inquiry_id" jdbcType="CHAR" property="inquiryId" />
+    <result column="inquiry_name" jdbcType="VARCHAR" property="inquiryName" />
+    <result column="amount" jdbcType="BIGINT" property="amount" />
+    <result column="estimated_delivery_date" jdbcType="TIMESTAMP" property="estimatedDeliveryDate" />
+    <result column="estimated_arrival_date" jdbcType="TIMESTAMP" property="estimatedArrivalDate" />
+    <result column="valid_date" jdbcType="TIMESTAMP" property="validDate" />
+    <result column="quotation_status" jdbcType="CHAR" property="quotationStatus" />
+    <result column="inquiry_user_id" jdbcType="BIGINT" property="inquiryUserId" />
+    <result column="inquiry_group_id" jdbcType="BIGINT" property="inquiryGroupId" />
+    <result column="supplier_id" jdbcType="BIGINT" property="supplierId" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="create_user_id" jdbcType="BIGINT" property="createUserId" />
+    <result column="create_datetime" jdbcType="TIMESTAMP" property="createDatetime" />
+    <result column="update_user_id" jdbcType="BIGINT" property="updateUserId" />
+    <result column="update_datetime" jdbcType="TIMESTAMP" property="updateDatetime" />
+    <result column="flag" jdbcType="INTEGER" property="flag" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    quotation_id, inquiry_id, inquiry_name, amount, estimated_delivery_date, estimated_arrival_date, 
+    valid_date, quotation_status, inquiry_user_id, inquiry_group_id, supplier_id, remark, 
+    create_user_id, create_datetime, update_user_id, update_datetime, flag
+  </sql>
+  <select id="selectByExample" parameterType="com.zealot.dcasting.model.QuotationsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from public.quotations
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from public.quotations
+    where quotation_id = #{quotationId,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from public.quotations
+    where quotation_id = #{quotationId,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zealot.dcasting.model.QuotationsExample">
+    delete from public.quotations
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zealot.dcasting.model.Quotations">
+    insert into public.quotations (quotation_id, inquiry_id, inquiry_name, 
+      amount, estimated_delivery_date, estimated_arrival_date, 
+      valid_date, quotation_status, inquiry_user_id, 
+      inquiry_group_id, supplier_id, remark, 
+      create_user_id, create_datetime, update_user_id, 
+      update_datetime, flag)
+    values (#{quotationId,jdbcType=CHAR}, #{inquiryId,jdbcType=CHAR}, #{inquiryName,jdbcType=VARCHAR}, 
+      #{amount,jdbcType=BIGINT}, #{estimatedDeliveryDate,jdbcType=TIMESTAMP}, #{estimatedArrivalDate,jdbcType=TIMESTAMP}, 
+      #{validDate,jdbcType=TIMESTAMP}, #{quotationStatus,jdbcType=CHAR}, #{inquiryUserId,jdbcType=BIGINT}, 
+      #{inquiryGroupId,jdbcType=BIGINT}, #{supplierId,jdbcType=BIGINT}, #{remark,jdbcType=VARCHAR}, 
+      #{createUserId,jdbcType=BIGINT}, #{createDatetime,jdbcType=TIMESTAMP}, #{updateUserId,jdbcType=BIGINT}, 
+      #{updateDatetime,jdbcType=TIMESTAMP}, #{flag,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zealot.dcasting.model.Quotations">
+    insert into public.quotations
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="quotationId != null">
+        quotation_id,
+      </if>
+      <if test="inquiryId != null">
+        inquiry_id,
+      </if>
+      <if test="inquiryName != null">
+        inquiry_name,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="estimatedDeliveryDate != null">
+        estimated_delivery_date,
+      </if>
+      <if test="estimatedArrivalDate != null">
+        estimated_arrival_date,
+      </if>
+      <if test="validDate != null">
+        valid_date,
+      </if>
+      <if test="quotationStatus != null">
+        quotation_status,
+      </if>
+      <if test="inquiryUserId != null">
+        inquiry_user_id,
+      </if>
+      <if test="inquiryGroupId != null">
+        inquiry_group_id,
+      </if>
+      <if test="supplierId != null">
+        supplier_id,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="createUserId != null">
+        create_user_id,
+      </if>
+      <if test="createDatetime != null">
+        create_datetime,
+      </if>
+      <if test="updateUserId != null">
+        update_user_id,
+      </if>
+      <if test="updateDatetime != null">
+        update_datetime,
+      </if>
+      <if test="flag != null">
+        flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="quotationId != null">
+        #{quotationId,jdbcType=CHAR},
+      </if>
+      <if test="inquiryId != null">
+        #{inquiryId,jdbcType=CHAR},
+      </if>
+      <if test="inquiryName != null">
+        #{inquiryName,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="estimatedDeliveryDate != null">
+        #{estimatedDeliveryDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="estimatedArrivalDate != null">
+        #{estimatedArrivalDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="validDate != null">
+        #{validDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="quotationStatus != null">
+        #{quotationStatus,jdbcType=CHAR},
+      </if>
+      <if test="inquiryUserId != null">
+        #{inquiryUserId,jdbcType=BIGINT},
+      </if>
+      <if test="inquiryGroupId != null">
+        #{inquiryGroupId,jdbcType=BIGINT},
+      </if>
+      <if test="supplierId != null">
+        #{supplierId,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null">
+        #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createDatetime != null">
+        #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserId != null">
+        #{updateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="updateDatetime != null">
+        #{updateDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="flag != null">
+        #{flag,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zealot.dcasting.model.QuotationsExample" resultType="java.lang.Long">
+    select count(*) from public.quotations
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update public.quotations
+    <set>
+      <if test="record.quotationId != null">
+        quotation_id = #{record.quotationId,jdbcType=CHAR},
+      </if>
+      <if test="record.inquiryId != null">
+        inquiry_id = #{record.inquiryId,jdbcType=CHAR},
+      </if>
+      <if test="record.inquiryName != null">
+        inquiry_name = #{record.inquiryName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.amount != null">
+        amount = #{record.amount,jdbcType=BIGINT},
+      </if>
+      <if test="record.estimatedDeliveryDate != null">
+        estimated_delivery_date = #{record.estimatedDeliveryDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.estimatedArrivalDate != null">
+        estimated_arrival_date = #{record.estimatedArrivalDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.validDate != null">
+        valid_date = #{record.validDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.quotationStatus != null">
+        quotation_status = #{record.quotationStatus,jdbcType=CHAR},
+      </if>
+      <if test="record.inquiryUserId != null">
+        inquiry_user_id = #{record.inquiryUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.inquiryGroupId != null">
+        inquiry_group_id = #{record.inquiryGroupId,jdbcType=BIGINT},
+      </if>
+      <if test="record.supplierId != null">
+        supplier_id = #{record.supplierId,jdbcType=BIGINT},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserId != null">
+        create_user_id = #{record.createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDatetime != null">
+        create_datetime = #{record.createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateUserId != null">
+        update_user_id = #{record.updateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDatetime != null">
+        update_datetime = #{record.updateDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.flag != null">
+        flag = #{record.flag,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update public.quotations
+    set quotation_id = #{record.quotationId,jdbcType=CHAR},
+      inquiry_id = #{record.inquiryId,jdbcType=CHAR},
+      inquiry_name = #{record.inquiryName,jdbcType=VARCHAR},
+      amount = #{record.amount,jdbcType=BIGINT},
+      estimated_delivery_date = #{record.estimatedDeliveryDate,jdbcType=TIMESTAMP},
+      estimated_arrival_date = #{record.estimatedArrivalDate,jdbcType=TIMESTAMP},
+      valid_date = #{record.validDate,jdbcType=TIMESTAMP},
+      quotation_status = #{record.quotationStatus,jdbcType=CHAR},
+      inquiry_user_id = #{record.inquiryUserId,jdbcType=BIGINT},
+      inquiry_group_id = #{record.inquiryGroupId,jdbcType=BIGINT},
+      supplier_id = #{record.supplierId,jdbcType=BIGINT},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      create_user_id = #{record.createUserId,jdbcType=BIGINT},
+      create_datetime = #{record.createDatetime,jdbcType=TIMESTAMP},
+      update_user_id = #{record.updateUserId,jdbcType=BIGINT},
+      update_datetime = #{record.updateDatetime,jdbcType=TIMESTAMP},
+      flag = #{record.flag,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zealot.dcasting.model.Quotations">
+    update public.quotations
+    <set>
+      <if test="inquiryId != null">
+        inquiry_id = #{inquiryId,jdbcType=CHAR},
+      </if>
+      <if test="inquiryName != null">
+        inquiry_name = #{inquiryName,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="estimatedDeliveryDate != null">
+        estimated_delivery_date = #{estimatedDeliveryDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="estimatedArrivalDate != null">
+        estimated_arrival_date = #{estimatedArrivalDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="validDate != null">
+        valid_date = #{validDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="quotationStatus != null">
+        quotation_status = #{quotationStatus,jdbcType=CHAR},
+      </if>
+      <if test="inquiryUserId != null">
+        inquiry_user_id = #{inquiryUserId,jdbcType=BIGINT},
+      </if>
+      <if test="inquiryGroupId != null">
+        inquiry_group_id = #{inquiryGroupId,jdbcType=BIGINT},
+      </if>
+      <if test="supplierId != null">
+        supplier_id = #{supplierId,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null">
+        create_user_id = #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createDatetime != null">
+        create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserId != null">
+        update_user_id = #{updateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="updateDatetime != null">
+        update_datetime = #{updateDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="flag != null">
+        flag = #{flag,jdbcType=INTEGER},
+      </if>
+    </set>
+    where quotation_id = #{quotationId,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zealot.dcasting.model.Quotations">
+    update public.quotations
+    set inquiry_id = #{inquiryId,jdbcType=CHAR},
+      inquiry_name = #{inquiryName,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=BIGINT},
+      estimated_delivery_date = #{estimatedDeliveryDate,jdbcType=TIMESTAMP},
+      estimated_arrival_date = #{estimatedArrivalDate,jdbcType=TIMESTAMP},
+      valid_date = #{validDate,jdbcType=TIMESTAMP},
+      quotation_status = #{quotationStatus,jdbcType=CHAR},
+      inquiry_user_id = #{inquiryUserId,jdbcType=BIGINT},
+      inquiry_group_id = #{inquiryGroupId,jdbcType=BIGINT},
+      supplier_id = #{supplierId,jdbcType=BIGINT},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_user_id = #{createUserId,jdbcType=BIGINT},
+      create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      update_user_id = #{updateUserId,jdbcType=BIGINT},
+      update_datetime = #{updateDatetime,jdbcType=TIMESTAMP},
+      flag = #{flag,jdbcType=INTEGER}
+    where quotation_id = #{quotationId,jdbcType=CHAR}
+  </update>
+</mapper>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zealot.dcasting.dao.ProjectDetailsDao">
+  	<update id="deleteDetailsById" parameterType="map">
+	    update public.project_details set flag = 0, update_datetime = #{update_datetime,jdbcType=TIMESTAMP}, update_user_id = #{update_user_id,jdbcType=BIGINT} where id = #{id};
+  	</update>
+  	<update id="deleteDetailsByProjectId" parameterType="map">
+	    update public.project_details set flag = 0, update_datetime = #{update_datetime,jdbcType=TIMESTAMP}, update_user_id = #{update_user_id,jdbcType=BIGINT} where project_id = #{projectId};
+  	</update>
+  	<insert id="insertList">
+        INSERT INTO public.project_details (project_id, inquiry_id, inquiry_name, detail_progress, detail_number, detail_category, detail_caption, detail_supplier_id, detail_supplier_group_id, create_user_id, create_datetime, update_user_id, update_datetime, flag) VALUES
+        <foreach collection="list" separator="," item="item" index="index">
+        	(#{item.projectId,jdbcType=VARCHAR},
+        	#{item.inquiryId,jdbcType=VARCHAR},
+        	#{item.inquiryName,jdbcType=VARCHAR},
+        	#{item.detailProgress,jdbcType=VARCHAR},
+        	#{item.detailNumber,jdbcType=VARCHAR},
+        	#{item.detailCategory,jdbcType=VARCHAR},
+        	#{item.detailCaption,jdbcType=VARCHAR},
+        	#{item.detailSupplierId,jdbcType=BIGINT},
+        	#{item.detailSupplierGroupId,jdbcType=BIGINT},
+      		#{item.createUserId,jdbcType=BIGINT},
+      		#{item.createDatetime,jdbcType=TIMESTAMP},
+      		#{item.updateUserId,jdbcType=BIGINT},
+      		#{item.updateDatetime,jdbcType=TIMESTAMP},
+      		#{item.flag,jdbcType=INTEGER})
+        </foreach>
+    </insert>
+</mapper>

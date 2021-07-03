@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zealot.dcasting.dao.QuotationsDao">
+	<select id="getLastId" resultType="String">
+        select quotation_id from quotations where quotation_id like concat(#{preString}, '%') order by quotation_id desc limit 1
+    </select>
+  	<update id="deleteQuotationsById" parameterType="map">
+	    update public.quotations set flag = 0, update_datetime = #{update_datetime,jdbcType=TIMESTAMP}, update_user_id = #{update_user_id,jdbcType=BIGINT} where quotation_id = #{id};
+  	</update>
+</mapper>

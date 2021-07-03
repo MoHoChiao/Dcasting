@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zealot.dcasting.mapper.ProjectsMapper">
+  <resultMap id="BaseResultMap" type="com.zealot.dcasting.model.Projects">
+    <id column="project_id" jdbcType="CHAR" property="projectId" />
+    <result column="project_progress" jdbcType="VARCHAR" property="projectProgress" />
+    <result column="project_status" jdbcType="INTEGER" property="projectStatus" />
+    <result column="inquiry_id" jdbcType="CHAR" property="inquiryId" />
+    <result column="inquiry_name" jdbcType="VARCHAR" property="inquiryName" />
+    <result column="supplier_id" jdbcType="BIGINT" property="supplierId" />
+    <result column="supplier_group_id" jdbcType="BIGINT" property="supplierGroupId" />
+    <result column="quotation_id" jdbcType="CHAR" property="quotationId" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="create_user_id" jdbcType="BIGINT" property="createUserId" />
+    <result column="create_datetime" jdbcType="TIMESTAMP" property="createDatetime" />
+    <result column="update_user_id" jdbcType="BIGINT" property="updateUserId" />
+    <result column="update_datetime" jdbcType="TIMESTAMP" property="updateDatetime" />
+    <result column="flag" jdbcType="INTEGER" property="flag" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    project_id, project_progress, project_status, inquiry_id, inquiry_name, supplier_id, 
+    supplier_group_id, quotation_id, remark, create_user_id, create_datetime, update_user_id, 
+    update_datetime, flag
+  </sql>
+  <select id="selectByExample" parameterType="com.zealot.dcasting.model.ProjectsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from public.projects
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from public.projects
+    where project_id = #{projectId,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from public.projects
+    where project_id = #{projectId,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zealot.dcasting.model.ProjectsExample">
+    delete from public.projects
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zealot.dcasting.model.Projects">
+    insert into public.projects (project_id, project_progress, project_status, 
+      inquiry_id, inquiry_name, supplier_id, 
+      supplier_group_id, quotation_id, remark, 
+      create_user_id, create_datetime, update_user_id, 
+      update_datetime, flag)
+    values (#{projectId,jdbcType=CHAR}, #{projectProgress,jdbcType=VARCHAR}, #{projectStatus,jdbcType=INTEGER}, 
+      #{inquiryId,jdbcType=CHAR}, #{inquiryName,jdbcType=VARCHAR}, #{supplierId,jdbcType=BIGINT}, 
+      #{supplierGroupId,jdbcType=BIGINT}, #{quotationId,jdbcType=CHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{createUserId,jdbcType=BIGINT}, #{createDatetime,jdbcType=TIMESTAMP}, #{updateUserId,jdbcType=BIGINT}, 
+      #{updateDatetime,jdbcType=TIMESTAMP}, #{flag,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zealot.dcasting.model.Projects">
+    insert into public.projects
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="projectId != null">
+        project_id,
+      </if>
+      <if test="projectProgress != null">
+        project_progress,
+      </if>
+      <if test="projectStatus != null">
+        project_status,
+      </if>
+      <if test="inquiryId != null">
+        inquiry_id,
+      </if>
+      <if test="inquiryName != null">
+        inquiry_name,
+      </if>
+      <if test="supplierId != null">
+        supplier_id,
+      </if>
+      <if test="supplierGroupId != null">
+        supplier_group_id,
+      </if>
+      <if test="quotationId != null">
+        quotation_id,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="createUserId != null">
+        create_user_id,
+      </if>
+      <if test="createDatetime != null">
+        create_datetime,
+      </if>
+      <if test="updateUserId != null">
+        update_user_id,
+      </if>
+      <if test="updateDatetime != null">
+        update_datetime,
+      </if>
+      <if test="flag != null">
+        flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="projectId != null">
+        #{projectId,jdbcType=CHAR},
+      </if>
+      <if test="projectProgress != null">
+        #{projectProgress,jdbcType=VARCHAR},
+      </if>
+      <if test="projectStatus != null">
+        #{projectStatus,jdbcType=INTEGER},
+      </if>
+      <if test="inquiryId != null">
+        #{inquiryId,jdbcType=CHAR},
+      </if>
+      <if test="inquiryName != null">
+        #{inquiryName,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierId != null">
+        #{supplierId,jdbcType=BIGINT},
+      </if>
+      <if test="supplierGroupId != null">
+        #{supplierGroupId,jdbcType=BIGINT},
+      </if>
+      <if test="quotationId != null">
+        #{quotationId,jdbcType=CHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null">
+        #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createDatetime != null">
+        #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserId != null">
+        #{updateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="updateDatetime != null">
+        #{updateDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="flag != null">
+        #{flag,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zealot.dcasting.model.ProjectsExample" resultType="java.lang.Long">
+    select count(*) from public.projects
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update public.projects
+    <set>
+      <if test="record.projectId != null">
+        project_id = #{record.projectId,jdbcType=CHAR},
+      </if>
+      <if test="record.projectProgress != null">
+        project_progress = #{record.projectProgress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectStatus != null">
+        project_status = #{record.projectStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.inquiryId != null">
+        inquiry_id = #{record.inquiryId,jdbcType=CHAR},
+      </if>
+      <if test="record.inquiryName != null">
+        inquiry_name = #{record.inquiryName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supplierId != null">
+        supplier_id = #{record.supplierId,jdbcType=BIGINT},
+      </if>
+      <if test="record.supplierGroupId != null">
+        supplier_group_id = #{record.supplierGroupId,jdbcType=BIGINT},
+      </if>
+      <if test="record.quotationId != null">
+        quotation_id = #{record.quotationId,jdbcType=CHAR},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserId != null">
+        create_user_id = #{record.createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createDatetime != null">
+        create_datetime = #{record.createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateUserId != null">
+        update_user_id = #{record.updateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDatetime != null">
+        update_datetime = #{record.updateDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.flag != null">
+        flag = #{record.flag,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update public.projects
+    set project_id = #{record.projectId,jdbcType=CHAR},
+      project_progress = #{record.projectProgress,jdbcType=VARCHAR},
+      project_status = #{record.projectStatus,jdbcType=INTEGER},
+      inquiry_id = #{record.inquiryId,jdbcType=CHAR},
+      inquiry_name = #{record.inquiryName,jdbcType=VARCHAR},
+      supplier_id = #{record.supplierId,jdbcType=BIGINT},
+      supplier_group_id = #{record.supplierGroupId,jdbcType=BIGINT},
+      quotation_id = #{record.quotationId,jdbcType=CHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      create_user_id = #{record.createUserId,jdbcType=BIGINT},
+      create_datetime = #{record.createDatetime,jdbcType=TIMESTAMP},
+      update_user_id = #{record.updateUserId,jdbcType=BIGINT},
+      update_datetime = #{record.updateDatetime,jdbcType=TIMESTAMP},
+      flag = #{record.flag,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zealot.dcasting.model.Projects">
+    update public.projects
+    <set>
+      <if test="projectProgress != null">
+        project_progress = #{projectProgress,jdbcType=VARCHAR},
+      </if>
+      <if test="projectStatus != null">
+        project_status = #{projectStatus,jdbcType=INTEGER},
+      </if>
+      <if test="inquiryId != null">
+        inquiry_id = #{inquiryId,jdbcType=CHAR},
+      </if>
+      <if test="inquiryName != null">
+        inquiry_name = #{inquiryName,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierId != null">
+        supplier_id = #{supplierId,jdbcType=BIGINT},
+      </if>
+      <if test="supplierGroupId != null">
+        supplier_group_id = #{supplierGroupId,jdbcType=BIGINT},
+      </if>
+      <if test="quotationId != null">
+        quotation_id = #{quotationId,jdbcType=CHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null">
+        create_user_id = #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createDatetime != null">
+        create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserId != null">
+        update_user_id = #{updateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="updateDatetime != null">
+        update_datetime = #{updateDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="flag != null">
+        flag = #{flag,jdbcType=INTEGER},
+      </if>
+    </set>
+    where project_id = #{projectId,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zealot.dcasting.model.Projects">
+    update public.projects
+    set project_progress = #{projectProgress,jdbcType=VARCHAR},
+      project_status = #{projectStatus,jdbcType=INTEGER},
+      inquiry_id = #{inquiryId,jdbcType=CHAR},
+      inquiry_name = #{inquiryName,jdbcType=VARCHAR},
+      supplier_id = #{supplierId,jdbcType=BIGINT},
+      supplier_group_id = #{supplierGroupId,jdbcType=BIGINT},
+      quotation_id = #{quotationId,jdbcType=CHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_user_id = #{createUserId,jdbcType=BIGINT},
+      create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      update_user_id = #{updateUserId,jdbcType=BIGINT},
+      update_datetime = #{updateDatetime,jdbcType=TIMESTAMP},
+      flag = #{flag,jdbcType=INTEGER}
+    where project_id = #{projectId,jdbcType=CHAR}
+  </update>
+</mapper>
